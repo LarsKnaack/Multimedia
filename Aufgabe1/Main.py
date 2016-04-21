@@ -3,7 +3,7 @@ import operator
 
 import math
 
-from Aufgabe1.HuffmanCode import HuffmanCode
+from HuffmanCode import HuffmanCode
 
 
 def sort_dict(dictionary):
@@ -31,6 +31,17 @@ def readfile(filename):
     f.close()
     return letters, sort_dict(chars)
 
+def coding_text(input_file, output_file, dictionary):
+
+    readf = open(input_file, 'r')
+    writef = open(output_file, 'w')
+
+        for line in readf:
+            for char in line:
+                writef.write(dictionary[char])
+
+        writef.close()
+        readf.close()
 
 if __name__ == "__main__":
     number_of_letters, character_dictionary = readfile("midsummer.txt")
