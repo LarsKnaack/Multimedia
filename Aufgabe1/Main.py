@@ -31,17 +31,18 @@ def readfile(filename):
     f.close()
     return letters, sort_dict(chars)
 
-def coding_text(input_file, output_file, dictionary):
 
+def coding_text(input_file, output_file, dictionary):
     readf = open(input_file, 'r')
     writef = open(output_file, 'w')
 
-        for line in readf:
-            for char in line:
-                writef.write(dictionary[char])
+    for line in readf:
+        for char in line:
+            writef.write(dictionary[char])
 
-        writef.close()
-        readf.close()
+    writef.close()
+    readf.close()
+
 
 if __name__ == "__main__":
     number_of_letters, character_dictionary = readfile("midsummer.txt")
@@ -50,8 +51,12 @@ if __name__ == "__main__":
     print("Generated Huffman Codes:")
     print("%-10s %-10s %s" % ("Frequency", "Character", "Code"))
     average_huffman_length = 0.0
+    entropy = 0.0
     for character, frequency in (sort_dict(character_dictionary)).items():
         code = code_dictionary.get(character)
+        p = frequency / number_of_letters
+        self_info = (math.log(p, 2)) * (-1)
+        entropy += p * self_info
         average_huffman_length += frequency * len(code)
         print("%-10d %-10s %s" % (frequency, repr(character), code))
 
@@ -59,3 +64,5 @@ if __name__ == "__main__":
     print(math.log(len(character_dictionary), 2))
     print("Average codelength with huffmann coding:")
     print(average_huffman_length / number_of_letters)
+    print("%-10s %-10s" % ("Entropy", "Redundancy"))
+    print("%-10f %-10f" % (entropy, (((average_huffman_length / number_of_letters) - entropy) / entropy)))
